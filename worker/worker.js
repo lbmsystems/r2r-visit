@@ -20,22 +20,38 @@ const T = {
 export default {
   async fetch(request, env) {
     const origin = request.headers.get("Origin") || "";
-    const allowed = (env.ALLOWED_ORIGINS || "").split(",").map((s) => s.trim()).filter(Boolean);
+    const allowed = (env.ALLOWED_ORIGINS || "")
+      .split(",")
+      .map((s) => s.trim().replace(/\/+$/, "").toLowerCase())
+      .filter(Boolean);
+    const originOk = allowed.includes(origin.toLowerCase());
+    const url = new URL(request.url);
+
+    // Tour times are public, so any page may read them. Submissions only from our site.
     const cors = {
-      "Access-Control-Allow-Origin": allowed.includes(origin) ? origin : allowed[0] || "",
+      "Access-Control-Allow-Origin": url.pathname === "/slots" ? "*" : (originOk ? origin : allowed[0] || "null"),
       "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
       "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Max-Age": "86400",
       Vary: "Origin",
     };
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
 
-    const url = new URL(request.url);
     try {
+      if (request.method === "GET" && (url.pathname === "/" || url.pathname === "/health")) {
+        return json({
+          ok: true,
+          version: 2,
+          hasToken: Boolean(env.AIRTABLE_TOKEN),
+          base: env.AIRTABLE_BASE || null,
+          allowedOrigins: allowed,
+        }, 200, { ...cors, "Access-Control-Allow-Origin": "*" });
+      }
       if (request.method === "GET" && url.pathname === "/slots") {
-        return json({ slots: await openSlots(env) }, 200, cors, "public, max-age=30");
+        return json({ slots: await openSlots(env) }, 200, cors, "no-store");
       }
       if (request.method === "POST" && url.pathname === "/submit") {
-        if (allowed.length && !allowed.includes(origin)) return json({ ok: false, error: "origin" }, 403, cors);
+        if (allowed.length && !originOk) return json({ ok: false, error: "origin" }, 403, cors);
         return await submit(request, env, cors);
       }
       return json({ ok: false, error: "not_found" }, 404, cors);

@@ -140,7 +140,8 @@
     p.then(function (data) {
       slots = (data.slots || []).sort(function (a, b) { return a.start < b.start ? -1 : 1; });
       renderDays();
-    }).catch(function () {
+    }).catch(function (err) {
+      console.error("[r2r] could not load tour times:", err);
       els.days.innerHTML = "";
       els.times.innerHTML = "";
       els.slotStatus.innerHTML = "We couldn't load tour times right now. You can <button type=\"button\" class=\"link-btn\" id=\"fallback-info\">request info instead</button> and we'll reach out to schedule.";
