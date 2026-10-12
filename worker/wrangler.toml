@@ -1,4 +1,4 @@
-name = "r2r-visit-api"
+name = "r2r-visit"
 main = "worker.js"
 compatibility_date = "2026-10-01"
 
