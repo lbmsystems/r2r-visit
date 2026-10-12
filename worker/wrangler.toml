@@ -1,0 +1,10 @@
+name = "r2r-visit-api"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+AIRTABLE_BASE = "appFqL2NQXCjG9Cc2"
+ALLOWED_ORIGINS = "https://visit.roottorisemicroschool.com"
+
+# Set the token as a secret, never here:
+#   npx wrangler secret put AIRTABLE_TOKEN

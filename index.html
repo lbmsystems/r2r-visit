@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Visit Root to Rise Microschool</title>
+  <meta name="description" content="Schedule a visit or request information about Root to Rise Microschool in Alexandria, VA. Care and learning for ages 0–4." />
+  <meta property="og:title" content="Visit Root to Rise Microschool" />
+  <meta property="og:description" content="Come see the space, meet the teachers, and see if Root to Rise feels like home." />
+  <link rel="icon" href="assets/logo-placeholder.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="https://roottorisemicroschool.com" aria-label="Root to Rise Microschool home">
+      <img src="assets/logo-placeholder.png" alt="Root to Rise Microschool" width="110" height="137" />
+    </a>
+    <a class="back-link" href="https://roottorisemicroschool.com">← Back to main site</a>
+  </header>
+
+  <main class="layout">
+    <section class="intro">
+      <p class="eyebrow">Alexandria, VA · Ages 0–4</p>
+      <h1 id="intro-title">Come see where<br />little roots grow.</h1>
+      <p class="lede" id="intro-lede">
+        The best way to know if Root to Rise is right for your family is to visit.
+        Bring your little one, meet our teachers, and spend some time in the space.
+        Tours take about 30 minutes.
+      </p>
+
+      <ul class="facts" aria-label="Quick facts">
+        <li><span class="dot" aria-hidden="true"></span><div><strong>Monday – Friday</strong><span>8:30 AM – 6:30 PM, before &amp; aftercare available</span></div></li>
+        <li><span class="dot" aria-hidden="true"></span><div><strong>5700 Colfax Ave</strong><span>Alexandria, Virginia</span></div></li>
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="form-title">
+      <form id="lead-form" novalidate>
+        <div class="form-head">
+          <h2 id="form-title">Schedule a visit</h2>
+          <p id="form-sub">Tell us a little about your family, then pick a time that works.</p>
+          <p class="mode-switch">
+            <span id="switch-lead">Not ready to visit?</span>
+            <button type="button" id="mode-toggle" class="link-btn">Get info first</button>
+          </p>
+        </div>
+
+        <fieldset>
+          <legend>About you</legend>
+          <div class="row two">
+            <label>First name<input name="parentFirst" autocomplete="given-name" required /></label>
+            <label>Last name<input name="parentLast" autocomplete="family-name" required /></label>
+          </div>
+          <div class="row two">
+            <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+            <label>Phone<input name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(703) 555-0123" required /></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>About your child</legend>
+          <div class="row two">
+            <label>Child's first name<input name="childFirst" required /></label>
+            <label>Child's last name<input name="childLast" /></label>
+          </div>
+          <div class="row two">
+            <label>Birthday or due date<input name="childBirthday" type="date" required /></label>
+            <label>Hoping to start
+              <select name="startMonth" required><option value="">Choose a month</option></select>
+            </label>
+          </div>
+          <p class="hint">Enrolling more than one child? Mention them in the note below and we'll add them.</p>
+        </fieldset>
+
+        <fieldset id="slot-fieldset">
+          <legend>Pick a tour time</legend>
+          <div id="slot-days" class="slot-days" role="tablist" aria-label="Tour dates"></div>
+          <div id="slot-times" class="slot-times" role="radiogroup" aria-label="Tour times"></div>
+          <p id="slot-status" class="hint" aria-live="polite">Loading available times…</p>
+          <input type="hidden" name="slotId" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Anything you'd like us to know? <span class="optional">Optional</span></legend>
+          <label class="sr-only" for="notes">Notes</label>
+          <textarea id="notes" name="notes" rows="3" placeholder="Questions, schedule needs, what you're looking for…"></textarea>
+        </fieldset>
+
+        <p id="form-error" class="form-error" role="alert" hidden></p>
+
+        <button type="submit" class="btn-primary" id="submit-btn">Book my visit</button>
+        <p class="consent">
+          By submitting, you agree to receive texts and emails from Root to Rise about your inquiry.
+          Message &amp; data rates may apply. Reply STOP to opt out.
+        </p>
+      </form>
+
+      <div id="success" class="success" hidden tabindex="-1">
+        <div class="sprout" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="56" height="56"><path d="M32 58V30" stroke="currentColor" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M32 34c-10 0-16-6-16-16 10 0 16 6 16 16zM32 30c0-10 6-16 16-16 0 10-6 16-16 16z" fill="currentColor" opacity=".85"/></svg>
+        </div>
+        <h2 id="success-title">You're all set!</h2>
+        <p id="success-body"></p>
+        <a class="btn-secondary" href="https://roottorisemicroschool.com">Back to Root to Rise</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Root to Rise Microschool · Rooted in community. Rising in possibility.</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
