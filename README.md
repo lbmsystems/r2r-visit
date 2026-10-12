@@ -29,7 +29,7 @@ With `API_BASE` empty in `site/config.js`, the page shows sample tour times and 
    npx wrangler deploy
    npx wrangler secret put AIRTABLE_TOKEN
    ```
-   Copy the Worker URL (e.g. `https://r2r-visit-api.<account>.workers.dev`).
+   Copy the Worker URL (e.g. `https://r2r-visit.learnbuildmaintain.workers.dev`).
 4. **Point the site at it** – set `API_BASE` in `site/config.js` to that URL.
 5. **GitHub Pages** – new repo, push `site/` contents, Settings → Pages → deploy from main. `CNAME` is already set.
 6. **DNS (Squarespace domains)** – add a CNAME record: host `visit`, value `<github-username>.github.io`. Then tick "Enforce HTTPS" in GitHub Pages once it verifies.
