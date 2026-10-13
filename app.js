@@ -40,7 +40,7 @@
       switchLead: "Not ready to visit?",
       toggle: "Get info first",
       introTitle: "Come see where<br />little roots grow.",
-      introLede: "The best way to know if Root to Rise is right for your family is to visit. Bring your little one, meet our teachers, and spend some time in the space. Tours take about 30 minutes."
+      introLede: "The best way to know if Root to Rise is right for your family is to visit. Bring your little one, meet our staff, and spend some time in the space. Tours take about 30 minutes."
     },
     info: {
       title: "Get more info",
@@ -313,7 +313,7 @@
         weekday: "long", month: "long", day: "numeric", hour: "numeric", minute: "2-digit", timeZone: TZ
       });
       els.successTitle.textContent = "See you soon, " + name + "!";
-      els.successBody.textContent = "Your visit is booked for " + when + " at 5700 Colfax Ave, Alexandria. We'll send a confirmation and a reminder the day before. Bring " + child + " along!";
+      els.successBody.textContent = "Your visit is booked for " + when + " at 4700 King St, Alexandria, VA. We'll send a confirmation and a reminder the day before. Bring " + child + " along!";
     } else {
       els.successTitle.textContent = "Thank you, " + name + "!";
       els.successBody.textContent = "We'll be in touch personally within one business day with more about Root to Rise. We can't wait to learn more about " + child + ".";
