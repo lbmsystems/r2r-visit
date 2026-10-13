@@ -100,10 +100,10 @@
     sel.appendChild(flex);
   })();
 
-  // Birthday: allow up to ~9 months ahead (due dates) and back ~6 years.
+  // Birthday: no future dates, back ~6 years.
   (function bdayLimits() {
     var b = form.elements.childBirthday;
-    var max = new Date(); max.setMonth(max.getMonth() + 9);
+    var max = new Date();
     var min = new Date(); min.setFullYear(min.getFullYear() - 6);
     b.max = max.toISOString().slice(0, 10);
     b.min = min.toISOString().slice(0, 10);
