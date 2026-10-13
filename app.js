@@ -23,6 +23,9 @@
     success: document.getElementById("success"),
     successTitle: document.getElementById("success-title"),
     successBody: document.getElementById("success-body"),
+    addCal: document.getElementById("add-cal"),
+    calGoogle: document.getElementById("cal-google"),
+    calIcs: document.getElementById("cal-ics"),
     introTitle: document.getElementById("intro-title"),
     introLede: document.getElementById("intro-lede"),
     tourExpect: document.getElementById("tour-expect")
@@ -322,6 +325,37 @@
     els.submit.textContent = COPY[mode].submit;
   }
 
+  // ---------- Add to calendar ----------
+  var PLACE = "Root to Rise Microschool, 4700 King St, Alexandria, VA";
+  function calStamp(d) { return d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, ""); }
+  function icsEscape(t) { return String(t).replace(/\\/g, "\\\\").replace(/([,;])/g, "\\$1").replace(/\n/g, "\\n"); }
+  function buildCalendar(slot, child) {
+    var start = new Date(slot.start);
+    var end = new Date(start.getTime() + (slot.minutes || 30) * 60000);
+    var title = "Tour at Root to Rise Microschool";
+    var details = "Your family tour at Root to Rise. Bring " + child + " along! See the space, meet the staff, and ask us anything.";
+    els.calGoogle.href = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=" + encodeURIComponent(title) +
+      "&dates=" + calStamp(start) + "/" + calStamp(end) +
+      "&details=" + encodeURIComponent(details) +
+      "&location=" + encodeURIComponent(PLACE);
+    var ics = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Root to Rise//Visit//EN", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+      "BEGIN:VEVENT",
+      "UID:" + slot.id + "-" + calStamp(new Date()) + "@roottorisemicroschool.com",
+      "DTSTAMP:" + calStamp(new Date()),
+      "DTSTART:" + calStamp(start),
+      "DTEND:" + calStamp(end),
+      "SUMMARY:" + icsEscape(title),
+      "DESCRIPTION:" + icsEscape(details),
+      "LOCATION:" + icsEscape(PLACE),
+      "BEGIN:VALARM", "TRIGGER:-PT1H", "ACTION:DISPLAY", "DESCRIPTION:" + icsEscape(title), "END:VALARM",
+      "END:VEVENT", "END:VCALENDAR"
+    ].join("\r\n");
+    els.calIcs.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(ics);
+    els.addCal.hidden = false;
+  }
+
   function done(slot) {
     var name = form.elements.parentFirst.value.trim();
     var child = form.elements.childFirst.value.trim();
@@ -331,7 +365,9 @@
       });
       els.successTitle.textContent = "See you soon, " + name + "!";
       els.successBody.textContent = "Your visit is booked for " + when + " at 4700 King St, Alexandria, VA. We'll send a confirmation and a reminder the day before. Bring " + child + " along!";
+      buildCalendar(slot, child);
     } else {
+      els.addCal.hidden = true;
       els.successTitle.textContent = "Thank you, " + name + "!";
       els.successBody.textContent = "We'll be in touch personally within one business day with more about Root to Rise. We can't wait to learn more about " + child + ".";
     }

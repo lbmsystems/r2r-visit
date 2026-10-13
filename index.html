@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=12" />
+  <link rel="stylesheet" href="styles.css?v=13" />
 </head>
 <body>
   <header class="site-header">
@@ -112,6 +112,19 @@
         </div>
         <h2 id="success-title">You're all set!</h2>
         <p id="success-body"></p>
+        <div id="add-cal" class="add-cal" hidden>
+          <p class="add-cal-label">Add it to your calendar</p>
+          <div class="add-cal-btns">
+            <a id="cal-google" class="cal-btn" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><rect x="2.5" y="4" width="15" height="13.5" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 8h15M6.5 2.5v3M13.5 2.5v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              Google Calendar
+            </a>
+            <a id="cal-ics" class="cal-btn" href="#" download="root-to-rise-tour.ics">
+              <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true"><rect x="2.5" y="4" width="15" height="13.5" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M2.5 8h15M6.5 2.5v3M13.5 2.5v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              Apple / Outlook
+            </a>
+          </div>
+        </div>
         <a class="btn-secondary" href="https://roottorisemicroschool.com">Back to Root to Rise</a>
       </div>
     </section>
@@ -121,7 +134,7 @@
     <p>Root to Rise Microschool · Rooted in community. Rising in possibility.</p>
   </footer>
 
-  <script src="config.js?v=12"></script>
-  <script src="app.js?v=12"></script>
+  <script src="config.js?v=13"></script>
+  <script src="app.js?v=13"></script>
 </body>
 </html>
