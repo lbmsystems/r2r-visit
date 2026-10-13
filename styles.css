@@ -316,27 +316,17 @@ input:focus, select:focus, textarea:focus {
 @media (max-width: 560px) { .day-nav { display: none; } .slot-days { scrollbar-width: thin; } }
 
 /* Add to calendar */
-.add-cal { margin: 0 auto 24px; }
-.add-cal-label {
-  font-family: var(--font-head);
-  font-weight: 600;
-  font-size: 12px;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--clay-deep);
-  margin: 0 auto 10px !important;
-}
-.add-cal-btns { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.add-cal { margin: -4px auto 26px; font-size: 15px; color: var(--ink-soft); }
+.add-cal-label { display: inline; margin: 0 !important; }
+.add-cal-btns { display: inline; }
 .cal-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
-  text-decoration: none;
-  font-size: 15px;
-  font-weight: 400;
-  transition: background .15s;
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--clay);
+  white-space: nowrap;
 }
-.cal-btn:hover { background: #222; }
-.cal-btn:focus-visible { outline: 2px solid var(--clay-deep); outline-offset: 2px; }
+.cal-btn:hover { text-decoration-color: var(--ink); }
+.cal-btn:focus-visible { outline: 2px solid var(--clay-deep); outline-offset: 2px; border-radius: 2px; }
+.cal-sep { margin: 0 8px; color: var(--ink-soft); }
