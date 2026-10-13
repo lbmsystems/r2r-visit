@@ -289,3 +289,6 @@ input:focus, select:focus, textarea:focus {
   .facts { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+.facts .stage { flex: none; width: 40px; height: 40px; margin-top: -6px; }
+.facts li { gap: 16px; }
