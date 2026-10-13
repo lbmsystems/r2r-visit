@@ -12,6 +12,8 @@
     sub: document.getElementById("form-sub"),
     slotFieldset: document.getElementById("slot-fieldset"),
     days: document.getElementById("slot-days"),
+    prev: document.getElementById("days-prev"),
+    next: document.getElementById("days-next"),
     times: document.getElementById("slot-times"),
     slotStatus: document.getElementById("slot-status"),
     submit: document.getElementById("submit-btn"),
@@ -182,6 +184,8 @@
     });
     els.slotStatus.textContent = "Times shown in Eastern Time.";
     selectDay(Object.keys(seen)[0]);
+    els.days.scrollLeft = 0;
+    updateArrows();
   }
 
   function selectDay(k) {
@@ -209,6 +213,19 @@
       els.times.appendChild(b);
     });
   }
+
+  // ---------- Date row arrows ----------
+  function updateArrows() {
+    var d = els.days;
+    var max = d.scrollWidth - d.clientWidth - 2;
+    els.prev.disabled = d.scrollLeft <= 2;
+    els.next.disabled = d.scrollLeft >= max;
+  }
+  function scrollDays(dir) { els.days.scrollBy({ left: dir * els.days.clientWidth * 0.8 }); }
+  els.prev.addEventListener("click", function () { scrollDays(-1); });
+  els.next.addEventListener("click", function () { scrollDays(1); });
+  els.days.addEventListener("scroll", updateArrows, { passive: true });
+  window.addEventListener("resize", updateArrows);
 
   // ---------- Validation ----------
   function normalizePhone(raw) {
