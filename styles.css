@@ -85,6 +85,18 @@ h1 {
   background: var(--bloom);
 }
 .facts li:nth-child(2) .dot { background: var(--rain); }
+.facts li:nth-child(3) .dot { background: var(--clay); }
+.facts li:nth-child(4) .dot { background: var(--ink); }
+.expect { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line); max-width: 30em; }
+.expect-title {
+  font-family: var(--font-head);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--clay-deep);
+  margin: 0 0 18px;
+}
 
 /* Card */
 .card {

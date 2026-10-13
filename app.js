@@ -22,7 +22,8 @@
     successTitle: document.getElementById("success-title"),
     successBody: document.getElementById("success-body"),
     introTitle: document.getElementById("intro-title"),
-    introLede: document.getElementById("intro-lede")
+    introLede: document.getElementById("intro-lede"),
+    tourExpect: document.getElementById("tour-expect")
   };
 
   var params = new URLSearchParams(location.search);
@@ -62,6 +63,7 @@
     els.introTitle.innerHTML = c.introTitle;
     els.introLede.textContent = c.introLede;
     els.slotFieldset.hidden = mode !== "visit";
+    els.tourExpect.hidden = mode !== "visit";
     document.title = mode === "visit" ? "Visit Root to Rise Microschool" : "Get Info · Root to Rise Microschool";
     var p = new URLSearchParams(location.search);
     p.delete("info");
