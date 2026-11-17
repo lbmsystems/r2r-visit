@@ -1,7 +1,7 @@
 /**
  * Root to Rise visit API (Cloudflare Worker)
  *
- * GET  /slots              -> open, future tour slots with room
+ * GET  /slots              -> open, future tour slots with room (and which school each is at)
  * POST /submit             -> creates a Lead (+ linked Student) in Airtable
  * POST /register/open      -> checks link + child's birthday, returns saved answers and documents
  * POST /register/save      -> saves answers; with submit:true, checks completeness and marks Submitted
@@ -18,6 +18,9 @@
  *   AIRTABLE_BASE    appFqL2NQXCjG9Cc2
  *   ALLOWED_ORIGINS  comma list, e.g. https://visit.roottorisemicroschool.com
  */
+
+// Must match the Location options in Leads and Tour Slots.
+const LOCATIONS = ["RootEd School House (5700 Colfax)", "Microschool & Project Center (4700 King)"];
 
 const T = {
   leads: "tblPhrTfTQFp0K0Ov",
@@ -49,7 +52,7 @@ export default {
       if (request.method === "GET" && (url.pathname === "/" || url.pathname === "/health")) {
         return json({
           ok: true,
-          version: 3,
+          version: 4,
           hasToken: Boolean(env.AIRTABLE_TOKEN),
           base: env.AIRTABLE_BASE || null,
           allowedOrigins: allowed,
@@ -81,13 +84,14 @@ async function openSlots(env) {
     "sort[0][direction]": "asc",
     pageSize: "100",
   });
-  ["Start", "Duration", "Spots left"].forEach((f) => params.append("fields[]", f));
+  ["Start", "Duration", "Spots left", "Location"].forEach((f) => params.append("fields[]", f));
   const data = await at(env, "GET", `${T.slots}?${params}`);
   return (data.records || []).map((r) => ({
     id: r.id,
     start: r.fields["Start"],
     minutes: r.fields["Duration"] ? Math.round(r.fields["Duration"] / 60) : 30,
     spotsLeft: r.fields["Spots left"] ?? 1,
+    location: r.fields["Location"] || null,
   }));
 }
 
@@ -103,10 +107,16 @@ async function submit(request, env, cors) {
     childFirst: s(b.childFirst), childLast: s(b.childLast),
     childBirthday: s(b.childBirthday, 10), startMonth: s(b.startMonth, 10),
     notes: s(b.notes, 4000), slotId: s(b.slotId, 30), sourceUrl: s(b.sourceUrl, 500),
+    location: s(b.location, 80),
   };
 
   if (!lead.parentFirst || !lead.childFirst || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(lead.email) || !/^\+\d{10,15}$/.test(lead.phone)) {
     return json({ ok: false, error: "invalid" }, 400, cors);
+  }
+
+  // Location comes from the visit page dropdown. A tour needs a real school; an info request may be "Not sure yet".
+  if (!LOCATIONS.includes(lead.location) && !(mode === "info" && lead.location === "Not sure yet")) {
+    return json({ ok: false, error: "invalid_location" }, 400, cors);
   }
 
   // Re-check the slot server-side so two families can't grab the last spot.
@@ -115,6 +125,10 @@ async function submit(request, env, cors) {
     if (!/^rec[A-Za-z0-9]{14}$/.test(lead.slotId)) return json({ ok: false, error: "invalid_slot" }, 400, cors);
     const slot = await at(env, "GET", `${T.slots}/${lead.slotId}`);
     if (!slot.fields || slot.fields["Bookable"] !== 1) return json({ ok: false, error: "slot_full" }, 409, cors);
+    // A slot tagged with one school can't be booked for the other. Untagged slots work for either.
+    if (slot.fields["Location"] && slot.fields["Location"] !== lead.location) {
+      return json({ ok: false, error: "location_mismatch" }, 409, cors);
+    }
     slotOk = true;
   }
 
@@ -126,6 +140,7 @@ async function submit(request, env, cors) {
     "Notes from family": lead.notes || undefined,
     "Status": mode === "visit" ? "Tour booked" : "Inquiry",
     "Path": mode === "visit" ? "Visit form" : "Info request",
+    "Location": lead.location,
     "SMS consent": true,
     "Source URL": lead.sourceUrl || undefined,
     "Answers raw": JSON.stringify({ ...lead, mode }, null, 2),
