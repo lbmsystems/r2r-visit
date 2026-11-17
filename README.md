@@ -24,11 +24,8 @@ With `API_BASE` empty in `site/config.js`, the page shows sample tour times and 
 
 1. **Logo** – replace `site/assets/logo-placeholder.png` with the original logo file (transparent PNG or SVG) and update the two references in `index.html`.
 2. **Airtable token** – airtable.com/create/tokens. Scopes: `data.records:read`, `data.records:write`. Access: only the R2R Microschool & Daycare base.
-3. **Worker** – from `worker/`:
-   ```
-   npx wrangler deploy
-   npx wrangler secret put AIRTABLE_TOKEN
-   ```
+3. **Worker** – deploys automatically from `main` (Cloudflare → Workers & Pages → r2r-visit → Settings → Builds, path `/worker`).
+   The Airtable token is a secret set once in that Worker's Settings → Variables and secrets.
    Copy the Worker URL (e.g. `https://r2r-visit.learnbuildmaintain.workers.dev`).
 4. **Point the site at it** – set `API_BASE` in `site/config.js` to that URL.
 5. **GitHub Pages** – new repo, push `site/` contents, Settings → Pages → deploy from main. `CNAME` is already set.
@@ -43,7 +40,7 @@ The Worker also serves the family registration page at **rooted-foundation.org/r
 rooted-foundation.org (with and without www) and this visit domain are listed in `ALLOWED_ORIGINS`. The document checklist families see is `CHECKLIST` in `worker/worker.js`.
 See that repo's README for how registration opens and where answers land.
 
-After changing the Worker, redeploy it: `cd worker && npx wrangler deploy`.
+The Worker deploys itself: Cloudflare is connected to this repo (Workers Builds, path `/worker`), so every merge to `main` builds and deploys it. No terminal needed.
 
 ## Squarespace buttons
 
