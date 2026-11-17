@@ -36,6 +36,15 @@ With `API_BASE` empty in `site/config.js`, the page shows sample tour times and 
 7. **Tour slots** – add a few future records in Tour Slots with Capacity filled and Open checked.
 8. **Test** – book one visit and one info request; check both rows in Leads and Students, then delete them.
 
+## Family registration API
+
+The Worker also serves the family registration page at **rooted-foundation.org/register**
+(repo `lbmsystems/rooted-foundation`) through `/register/open`, `/register/save`, `/register/upload` and `/register/remove`.
+rooted-foundation.org (with and without www) and this visit domain are listed in `ALLOWED_ORIGINS`. The document checklist families see is `CHECKLIST` in `worker/worker.js`.
+See that repo's README for how registration opens and where answers land.
+
+After changing the Worker, redeploy it: `cd worker && npx wrangler deploy`.
+
 ## Squarespace buttons
 
 - Schedule a visit → `https://visit.roottorisemicroschool.com`
