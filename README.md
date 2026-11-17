@@ -1,3 +1,15 @@
+# r2r-visit
+
+**The visit page has moved to [rooted-foundation.org/visit](https://rooted-foundation.org/visit)** (repo `lbmsystems/rooted-foundation`).
+visit.roottorisemicroschool.com now only redirects there, keeping `?info`.
+
+This repo still holds the **Cloudflare Worker** (`worker/`) that the visit and registration pages use to talk to Airtable.
+It deploys automatically from `main` (Cloudflare Workers Builds, path `/worker`).
+
+---
+
+## Previous notes (visit page, now retired)
+
 # visit.roottorisemicroschool.com
 
 Visit and info-request page for Root to Rise Microschool. Static site on GitHub Pages, with a small Cloudflare Worker that writes to Airtable so the Airtable token is never in the public code.
