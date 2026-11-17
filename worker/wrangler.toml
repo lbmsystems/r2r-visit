@@ -4,7 +4,7 @@ compatibility_date = "2026-10-01"
 
 [vars]
 AIRTABLE_BASE = "appFqL2NQXCjG9Cc2"
-ALLOWED_ORIGINS = "https://rooted-foundation.org,https://www.rooted-foundation.org,https://visit.roottorisemicroschool.com"
+ALLOWED_ORIGINS = "https://rooted-foundation.org,https://www.rooted-foundation.org,https://rooted-foundation.pages.dev,https://visit.roottorisemicroschool.com"
 
 # Set the token as a secret, never here:
 #   npx wrangler secret put AIRTABLE_TOKEN
